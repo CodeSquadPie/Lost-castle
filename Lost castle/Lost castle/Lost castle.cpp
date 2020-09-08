@@ -1,8 +1,28 @@
-﻿#include <SFML/Graphics.hpp>
+﻿#include <iostream>
+#include <SFML/Graphics.hpp>
+#include "tinyxml2.h"
+
+using namespace tinyxml2;
+
+char map_file[] = "../assets/maps/debug/debug_map.tmx";
+char map_tileset_xml[] = "../assets/maps/debug/debug_room_tileset.tsx";
+char map_tileset_img[] = "../assets/maps/debug/debug_room_tileset.jpg";
+
+int example_1(char *file_location)
+{
+    XMLDocument doc;
+    doc.LoadFile(file_location);
+
+    return doc.ErrorID();
+}
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+//PROTOTYPE AREA BEGIN =======================
+    int err = example_1(map_tileset_xml);
+    if (err != NULL){std::cout<<"Error loading xml"<<std::endl;}
+//PROTOTYPE AREA END =========================
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
