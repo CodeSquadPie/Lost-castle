@@ -1,6 +1,2 @@
 ﻿  Lost castle.cpp
-C:\Lost castle team\Lost castle\Lost castle\Lost castle.cpp(53,79): warning C4305: аргумент: усечение из "double" в "float"
-C:\Lost castle team\Lost castle\Lost castle\Lost castle.cpp(54,79): warning C4305: аргумент: усечение из "double" в "float"
-C:\Lost castle team\Lost castle\Lost castle\Lost castle.cpp(55,77): warning C4305: аргумент: усечение из "double" в "float"
-C:\Lost castle team\Lost castle\Lost castle\Lost castle.cpp(56,78): warning C4305: аргумент: усечение из "double" в "float"
-  Lost castle.vcxproj -> C:\Lost castle team\Lost castle\x64\Debug\Lost castle.exe
+  Lost castle.vcxproj -> C:\Programming\GitHub\Lost-castle\Lost castle\x64\Debug\Lost castle.exe
