@@ -10,12 +10,14 @@ const int RESOLUTION_Y = 600;
 const float ACCELERATION_QUOTIENT = 0.1f;
 const float SLOWDOWN_QUOTIENT = 1.006f;
 const float FALL_ACCELERATION_QUOTIENT = 0.2f;
+const int ADDITIONAL_DRAW_AREA = 1;
 
 RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "SFML works!");
 
 int *current_map;
 Clock timer;
 Vector2f view_center(0.f,0.f);
+Vector2f view_center_delta(0.f,0.f);
 Vector2f view_size((float)RESOLUTION_X/2.f,(float)RESOLUTION_Y/2.f);
 Texture tile_map_image;
 Texture hero_texture;
@@ -23,8 +25,8 @@ Texture hero_texture;
 Sprite background_brush;
 int tile_size_x;
 int tile_size_y;
-int map_size_x;
-int map_size_y;
+int map_size_x = 50;
+int map_size_y = 15;
 float hero_dx = 0;
 float hero_dy = 0;
 float hero_dtx = 0;
@@ -45,24 +47,36 @@ int querry_tile_on_map(int x,int y)
     return current_map[y*map_size_x+x];
 }
 
-void viewed_tiles(Vector2f *view_center, Vector2f *view_size)
+void viewed_tiles()
 {
     float tile_size_x_f = (float)tile_size_x;
-    float half_size_x = view_size->x/2;
-    float half_size_y = view_size->y/2;
-    Vector2f up_left_corner(view_center->x - half_size_x,view_center->y - half_size_y);
-    Vector2f down_right_corner(view_center->x + half_size_x, view_center->y + half_size_y);
-    int x1 = (int)up_left_corner.x/tile_size_x;
-    int y1 = (int)up_left_corner.y/tile_size_y;
-    int x2 = (int)down_right_corner.x / tile_size_x;
-    int y2 = (int)down_right_corner.y / tile_size_y;
+    float half_size_x = view_size.x/2;
+    float half_size_y = view_size.y/2;
+    Vector2f up_left_corner(view_center.x - half_size_x,view_center.y - half_size_y);
+    Vector2f down_right_corner(view_center.x + half_size_x, view_center.y + half_size_y);
+    
+    int x1 = (int)up_left_corner.x / tile_size_x;
+    if (x1<0){x1=0;}
+    int y1 = (int)up_left_corner.y / tile_size_y;
+    if (y1<0){y1=0;}
+    int x2 = (int)down_right_corner.x / tile_size_x + ADDITIONAL_DRAW_AREA;
+    if (x2>map_size_x){x2=map_size_x;}
+    int y2 = (int)down_right_corner.y / tile_size_y + ADDITIONAL_DRAW_AREA;
+    if (y2>map_size_y){y2=map_size_y;}
+
+    //std::cout << "X1: " << x1 << " Y2: " << y1 << " X2: " << x2 << " Y2: " << y2 << " center_x: " << view_center.x << " center_y: " << view_center.y << std::endl;
     int temp_int;
+    
     for(int i=y1;i<y2;i++)
     {
-        if(i<0){i=0;}
         for(int j=x1;j<x2;j++)
         {
-            if(j<0){j=0;}
+            //if(j<0){j=0;}
+            //if(i<0){i=0;}
+
+            //if(j>map_size_x){i++;j=0;}
+            //if(i>map_size_y){ break;}
+
             temp_int = querry_tile_on_map(j,i);
             render_tile_brute_force(j,i,temp_int);
             //std::cout << "X: " << j << " Y : " << i << " Type: " << temp_int << std::endl;
@@ -148,14 +162,13 @@ int main()
     if (err != NULL){std::cout<<"Error loading xml"<<std::endl;}
 
     View view;
-    view.setCenter(Vector2f(0.f,0.f));
-    view.setSize(Vector2f((float)RESOLUTION_X/2.f, (float)RESOLUTION_Y/2.f));
+    view.setCenter(view_center);
+    view.setSize(view_size);
     hero_texture.loadFromFile("../assets/characters/hero/adventurer-v1.5-Sheet.png");
     tile_map_image.loadFromFile("../assets/maps/debug/debug_room_tileset.jpg");
     
     window.setView(view);
-    
-
+    viewed_tiles();
     Sprite hero_sprite;
     hero_sprite.setTexture(hero_texture);
     hero_sprite.setTextureRect(IntRect(0, 0, 50, 37));
@@ -164,8 +177,6 @@ int main()
 
     //std::cout << querry_tile_on_map(10,7) <<std::endl; // must be 2
     
-
-
     while (window.isOpen())
     {
         sf::Event event;
@@ -192,10 +203,16 @@ int main()
         Time time_elapsed = timer.restart();
         hero_dtx = time_elapsed.asSeconds() * hero_dx;
         hero_dty = time_elapsed.asSeconds() * hero_dy;
+
         //TODO: correction of dtx and dty by collision
+        view_center_delta.x = hero_dtx;
+        view_center_delta.y = hero_dty;
+        view.move(view_center_delta.x,view_center_delta.y);
+        view_center = view.getCenter();
         hero_sprite.move(hero_dtx,hero_dty);
         window.clear();
-        viewed_tiles(&view_center, &view_size);
+        window.setView(view);
+        viewed_tiles();
         window.draw(hero_sprite);
         window.display();
     }
