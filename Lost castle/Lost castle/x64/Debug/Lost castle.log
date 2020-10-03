@@ -1,2 +1,23 @@
-﻿  Lost castle.cpp
-  Lost castle.vcxproj -> C:\Programming\GitHub\Lost-castle\Lost castle\x64\Debug\Lost castle.exe
+﻿  Animation_Manager.cpp
+C:\Lost castle team\Lost castle\Lost castle\Animation_Manager.cpp(20,20): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+C:\Lost castle team\Lost castle\Lost castle\Animation_Manager.cpp(39,42): warning C4244: аргумент: преобразование "T" в "float", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+C:\Lost castle team\Lost castle\Lost castle\Animation_Manager.cpp(54,48): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Lost castle team\Lost castle\Lost castle\Animation_Manager.cpp(54,45): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Lost castle team\Lost castle\Lost castle\Animation_Manager.cpp(70,75): warning C4244: return: преобразование "T" в "float", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+C:\Lost castle team\Lost castle\Lost castle\Animation_Manager.cpp(72,75): warning C4244: return: преобразование "T" в "float", возможна потеря данных
+          with
+          [
+              T=int
+          ]
+  Lost castle.cpp
+C:\Lost castle team\Lost castle\Lost castle\Lost castle.cpp(55,20): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+  Создание кода...
+  Lost castle.vcxproj -> C:\Lost castle team\Lost castle\x64\Debug\Lost castle.exe

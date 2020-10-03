@@ -34,5 +34,8 @@ class character
 		void reference_time(Time* time);
 		void update();
 		void render();
+
+
+
 };
 

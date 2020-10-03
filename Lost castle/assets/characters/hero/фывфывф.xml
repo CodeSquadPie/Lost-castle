@@ -1,0 +1,30 @@
+<!DOCTYPE SpriteDecomposer>
+<sprites image="sprite_sheet.png" transparentColor="">
+ <animation title="character_idle" delay="50">
+  <cut w="19" x="14" y="7" h="29" row="1" col="1"/>
+  <cut w="17" x="66" y="6" h="30" row="1" col="1"/>
+  <cut w="19" x="115" y="6" h="30" row="1" col="1"/>
+  <cut w="20" x="163" y="7" h="29" row="1" col="1"/>
+ </animation>
+ <animation title="character_ducking" delay="50">
+  <cut w="19" x="216" y="15" h="21" row="1" col="1"/>
+  <cut w="20" x="265" y="14" h="22" row="1" col="1"/>
+  <cut w="19" x="315" y="14" h="22" row="1" col="1"/>
+  <cut w="17" x="17" y="52" h="21" row="1" col="1"/>
+ </animation>
+ <animation title="character_running" delay="50">
+  <cut w="20" x="67" y="45" h="28" row="1" col="1"/>
+  <cut w="20" x="116" y="46" h="27" row="1" col="1"/>
+  <cut w="20" x="166" y="48" h="25" row="1" col="1"/>
+  <cut w="23" x="217" y="45" h="28" row="1" col="1"/>
+  <cut w="20" x="266" y="46" h="27" row="1" col="1"/>
+  <cut w="20" x="316" y="48" h="25" row="1" col="1"/>
+ </animation>
+ <animation title="ыва" delay="150">
+  <cut w="17" x="66" y="6" h="30" row="1" col="1"/>
+  <cut w="19" x="115" y="6" h="30" row="1" col="1"/>
+  <cut w="19" x="14" y="7" h="29" row="1" col="1"/>
+  <cut w="20" x="163" y="7" h="29" row="1" col="1"/>
+  <cut w="19" x="216" y="15" h="21" row="1" col="1"/>
+ </animation>
+</sprites>

@@ -1,6 +1,11 @@
 ﻿#include "game_header.h"
 #include "character.h"
 #include "map.h"
+#include <list>
+#include "Animation_Manager.h"
+
+
+
 
 RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "SFML works!");
 char map_file_location[] = "../assets/maps/debug/";
@@ -12,6 +17,10 @@ Time time_elapsed;
 View view;
 Vector2f view_center(0.f,0.f);
 Vector2f view_size((float)RESOLUTION_X/2.f,(float)RESOLUTION_Y/2.f);
+
+
+
+
 
 int main()
 {
@@ -25,7 +34,15 @@ int main()
     hero->reference_time(&time_elapsed);
     hero->reference_view(&view);
     //hero->load_character(hero_file_location);
-    
+
+    Texture texture;
+    texture.loadFromFile("../assets/characters/hero/sprite_sheet.png");
+    Animation_Manager anim;
+    anim.loadFromXML("../assets/characters/hero/hero_animation.xml", texture);
+
+
+
+
     timer.restart();
     while (window.isOpen())
     {
@@ -35,6 +52,8 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        float time = timer.getElapsedTime().asMicroseconds();
+        time = time / 1000;
         time_elapsed = timer.restart();
         Vector2u screen_size = window.getSize();
         Vector2f screen_size_half;
@@ -45,6 +64,11 @@ int main()
         window.clear();
         current_map->render();
         //hero->render();
+        anim.update(time);
+        std::cout << time << std::endl;
+       anim.set("character_running");
+       anim.draw(window, 100 , 100);
+        
         window.setView(view);
         window.display();
     }
