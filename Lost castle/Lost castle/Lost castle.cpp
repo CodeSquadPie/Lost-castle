@@ -1,47 +1,34 @@
-﻿#include "game_header.h"
-#include "character.h"
+﻿#include "LuaWrapper.h"
+//#include "character.h"
 #include "map.h"
-#include <list>
-#include "Animation_Manager.h"
+#include "game_header.h"
 
-
-
-
-RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "SFML works!");
-char map_file_location[] = "../assets/maps/debug/";
-char hero_file_location[]= "../assets/characters/hero/adventurer-v1.5-Sheet.tsx";
-map *current_map = new map();
-character *hero = new character(0.f,0.f);
+LuaWrapper Lua;
+map current_map;
 Clock timer;
 Time time_elapsed;
 View view;
-Vector2f view_center(0.f,0.f);
-Vector2f view_size((float)RESOLUTION_X/2.f,(float)RESOLUTION_Y/2.f);
-
-
-
-
+Vector2f view_center(500.f,250.f);
 
 int main()
 {
+    Lua.reference_map(&current_map);
+    Lua.init();
+    RenderWindow window(
+        sf::VideoMode(Lua.resolution_width,Lua.resolution_height),
+        "Lost castle project");
+    current_map.reference_render_target(&window);
+    current_map.reference_view(&view);
+    window.setFramerateLimit(Lua.framerate_limit);
     view.setCenter(view_center);
-    view.setSize(view_size);
     window.setView(view);
-    current_map->reference_render_target(&window);
-    current_map->reference_view(&view);
-    current_map->load_map(map_file_location);
-    current_map->load_map_tileset(map_file_location);
-    hero->reference_time(&time_elapsed);
-    hero->reference_view(&view);
+    Lua.update();
+    /*current_map.print_map_index(3);
+    current_map.print_map_index(4);
+    current_map.print_map_index(5);*/
+    //hero->reference_time(&time_elapsed);
+    //hero->reference_view(&view);
     //hero->load_character(hero_file_location);
-
-    Texture texture;
-    texture.loadFromFile("../assets/characters/hero/sprite_sheet.png");
-    Animation_Manager anim;
-    anim.loadFromXML("../assets/characters/hero/hero_animation.xml", texture);
-
-
-
 
     timer.restart();
     while (window.isOpen())
@@ -60,18 +47,15 @@ int main()
         screen_size_half.x = (float)screen_size.x/2.f;
         screen_size_half.y = (float)screen_size.y/2.f;
         view.setSize(screen_size_half);
-        hero->update();
+        //hero->update();
         window.clear();
-        current_map->render();
-        //hero->render();
-        anim.update(time);
-        std::cout << time << std::endl;
-       anim.set("character_running");
-       anim.draw(window, 100 , 100);
-        
+        current_map.render();
+        //std::cout << time << std::endl;
+        view_center = Vector2f(view_center.x + 1.f,view_center.y);
+        view.setCenter(view_center);
         window.setView(view);
         window.display();
     }
-
+    Lua.~LuaWrapper();
     return 0;
 }

@@ -18,19 +18,13 @@
     <ClCompile Include="Lost castle.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="tinyxml2.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="character.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="map.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation_Manager.cpp">
+    <ClCompile Include="LuaWrapper.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,18 +38,24 @@
     <ClInclude Include="map.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="tinyxml2.h">
+    <ClInclude Include="lua540\include\lauxlib.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
+    <ClInclude Include="lua540\include\lua.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Animation_Manager.h">
+    <ClInclude Include="lua540\include\lualib.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaWrapper.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="tinyxml2.dll">
+    <None Include="main.lua">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="..\config\config.lua">
       <Filter>Исходные файлы</Filter>
     </None>
   </ItemGroup>

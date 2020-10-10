@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>SFML-2.5.1\include;tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>SFML-2.5.1\include;lua540\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,7 +141,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>SFML-2.5.1\include;lua540\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,23 +153,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Animation_Manager.cpp" />
-    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="Lost castle.cpp" />
+    <ClCompile Include="LuaWrapper.cpp" />
     <ClCompile Include="map.cpp" />
-    <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation_Manager.h" />
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="game_header.h" />
+    <ClInclude Include="lua540\include\lauxlib.h" />
+    <ClInclude Include="lua540\include\lua.h" />
+    <ClInclude Include="lua540\include\lualib.h" />
+    <ClInclude Include="LuaWrapper.h" />
     <ClInclude Include="map.h" />
-    <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="tinyxml2.dll" />
+    <None Include="..\config\config.lua" />
+    <None Include="main.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
