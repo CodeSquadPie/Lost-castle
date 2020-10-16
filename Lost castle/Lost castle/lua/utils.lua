@@ -11,5 +11,16 @@ return{
 			copy = original
 		end
 		return copy
+	end,
+
+	safe_file_reading = function(location)
+		local file = dofile(location)
+		if file == nil then
+			error("no such file")
+			return false
+		else
+			return file
+		end
+
 	end
 }

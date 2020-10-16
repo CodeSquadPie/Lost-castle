@@ -1,16 +1,54 @@
-local map_location = "../../assets/maps/debug/"
-local config_location = "../../config/config.lua"
-map = dofile(map_location.."map.lua")
-map.tilesets[1].image = map_location..map.tilesets[1].image
-local world = dofile("world.lua")
+local map_location = "../assets/maps/debug/"
+local config_location = "../config/config.lua"
 
+map = dofile(map_location.."map.lua")
+
+world = require("lua/world")
+ent = world.entities:create()
+print("entity exists =")
+print(world.entities:exists(ent))
+world.systems.components:add("position",ent,5,5)
+world.systems.components:add("velocity",ent,6,9)
+
+map.tilesets[1].image = map_location..map.tilesets[1].image
+--[[
+TODO: functions in C++
+
+_LoadSprite(
+	_host,
+	texture_location,
+	start_x,
+	start_y,
+	end_x,
+	end_y
+) --should have return of sprite index or userdata(pointer)
+
+_ChangeSprite(
+	_host,
+	index(or pointer),
+	start_x,
+	start_y,
+	end_x,
+	end_y
+)
+
+_LoadHUD(
+	_host,
+
+)
+
+_LoadMenu(
+	_host,
+)
+
+--]]
 
 config = dofile(config_location)
-	_LoadConfig(_host,config)
+_LoadConfig(_host,config)
 
 init = function()
 	print("Lua called init function within script.")
-	print("tilewidth should be 50, it is ".. map.width)
+	world.systems:load_systems()
 	_LoadMap(_host,
 		map.tilesets[1].image,
 		map.width,
@@ -18,13 +56,23 @@ init = function()
 		map.tilewidth,
 		map.tileheight,
 		map.tilesets[1].columns,
-		map.layers[1].data)
+		map.layers[1].data
+	)
+--[[
+	b = world.entities.create()
+	c = world.entities.create()
+	d = world.entities.create()
+
+	print(world.entities.exists(b))
+	print(world.entities.exists(c))
+	print(world.entities.exists(d))
+--]]
 end
 
 update = function(dt)
-	world:update(dt)
+	world.systems:update(dt)
 end
 
 draw = function()
-	world:draw()
+	--world:draw()
 end

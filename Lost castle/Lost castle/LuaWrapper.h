@@ -16,7 +16,7 @@ class LuaWrapper
 		LuaWrapper();
 		~LuaWrapper();
 		void init();
-		void update();
+		void update(float time);
 		void draw();
 		static int lua_load_map(lua_State *L);
 		static int lua_load_config(lua_State *L);

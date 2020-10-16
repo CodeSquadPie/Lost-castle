@@ -30,10 +30,12 @@ void LuaWrapper::init()
 	lua_pcall(this->L,0,0,0);
 }
 
-void LuaWrapper::update()
+void LuaWrapper::update(float time)
 {
 	lua_getglobal(this->L,"update");
-	lua_pcall(this->L,0,0,0);
+	lua_Number delta_time = time;
+	lua_pushnumber(this->L,delta_time);
+	lua_pcall(this->L,1,0,0);
 }
 
 void LuaWrapper::draw()
@@ -100,8 +102,8 @@ int LuaWrapper::lua_load_config(lua_State* L)
 	LuaWrapper* current_wrapper = static_cast<LuaWrapper*>(lua_touserdata(L, 1));
 	lua_remove(L, 1);
 
-	//push key to needed field, call it from table on stack, read and
-	//delete from stack value that was called
+	//push table key to needed field, call it from table on stack, read and
+	//delete from stack value that was returned
 	lua_pushfstring(L,"res_width");
 	lua_gettable(L,1);
 	current_wrapper->resolution_width = (unsigned int)lua_tonumber(L,-1);

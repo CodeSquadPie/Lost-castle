@@ -1,27 +1,19 @@
-return{
-	new = function(requires)
-		assert(type(requires) == "table")
-		local system = {
-			requires = requires
-		}
-		
-		system:match = function(entity)
-			for i=1, #self.requires do
-				if entity:get(self.requires[i]) == nil then
-					return false
-				end
-			end
-			return true
-		end
-		system:load = function(entity)
-		end
-		system:update = function(dt,entity)
-		end
-		system:draw = function(entity)
-		end
-		system:ui_draw = function(entity)
-		end
-		system:destroy = function(entity)
-		end
-	end
-}
+system = {}
+
+system.movement = function()
+  mov = {}
+  mov.update = function(dt)
+    correlations = components:correlation_2("position","velocity")
+    for k,v in pairs(correlations)do
+      if world.entities:exists(v) then
+        components.pool["position"][v].x = components.pool["position"][v].x + components.pool["velocity"][v].dx * dt
+        components.pool["position"][v].y = components.pool["position"][v].y + components.pool["velocity"][v].dy * dt
+        print("x = "..components.pool["position"][v].x.." y = "..components.pool["position"][v].y)
+      end
+    end
+  end
+  return mov
+end
+
+
+return system
