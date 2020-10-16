@@ -10,10 +10,12 @@ systems.draw_pool = {}
 
 function systems:load_systems()
   self.update_pool.movement = system.movement()
+  self.update_pool.camera_movement = system.camera_movement()
 end
 
 function systems:update(dt)
   self.update_pool.movement.update(dt)
+  self.update_pool.camera_movement.update()
 end
 
 function systems:draw()

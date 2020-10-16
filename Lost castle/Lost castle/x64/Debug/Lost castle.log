@@ -1,5 +1,2 @@
-﻿  Lost castle.cpp
-C:\Programming\GitHub\Lost-castle\Lost castle\Lost castle\Lost castle.cpp(42,20): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
-  LuaWrapper.cpp
-  Создание кода...
+﻿  LuaWrapper.cpp
   Lost castle.vcxproj -> C:\Programming\GitHub\Lost-castle\Lost castle\x64\Debug\Lost castle.exe

@@ -28,7 +28,7 @@ function components:add(component_name,index,...)
 end
 
 function components:correlation_2(name_1,name_2)
-  correlation = {}
+  local correlation = {}
   for k1,v1 in pairs(self.pool[name_1])do
     for k2,v2 in pairs(self.pool[name_2])do
       if k1 == k2 then table.insert(correlation,k1) end
@@ -37,20 +37,44 @@ function components:correlation_2(name_1,name_2)
   return correlation
 end
 
+function components:correlation_2_first_instance(name_1,name_2)
+  for k1,v1 in pairs(self.pool[name_1])do
+    for k2,v2 in pairs(self.pool[name_2])do
+      if k1 == k2 then return k1 end
+    end
+  end
+end
+
 function components:correlation_3(name_1,name_2,name_3)
-  correlation = {}
-    for k1,v1 in pairs(self.pool[name_1])do
-      for k2,v2 in pairs(self.pool[name_2])do
-        for k3,v3 in pairs(self.pool[name_3])do
-          if k1 == k2 and k1 == k3 then table.insert(correlation,k1) end
-        end
+  local correlation = {}
+  for k1,v1 in pairs(self.pool[name_1])do
+    for k2,v2 in pairs(self.pool[name_2])do
+      for k3,v3 in pairs(self.pool[name_3])do
+        if k1 == k2 and k1 == k3 then table.insert(correlation,k1) end
       end
     end
+  end
   return correlation
+end
+
+function components:correlation_3_first_instance(name_1,name_2,name_3)
+  for k1,v1 in pairs(self.pool[name_1])do
+    for k2,v2 in pairs(self.pool[name_2])do
+      for k3,v3 in pairs(self.pool[name_3])do
+        if k1 == k2 and k1 == k3 then return k1 end
+      end
+    end
+  end
 end
 
 function components:remove(component_name,index)
   self.pool[component_name][index] = nil
+end
+
+function components:remove_all_components(index)
+  for k,v in ipairs(self.pool)do
+    self.pool[k][index] = nil
+  end
 end
 
 return components

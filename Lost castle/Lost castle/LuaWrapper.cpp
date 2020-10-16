@@ -15,6 +15,7 @@ LuaWrapper::LuaWrapper()
 	//register static methods to be callable from lua
 	lua_register(this->L,"_LoadMap",this->lua_load_map);
 	lua_register(this->L,"_LoadConfig",this->lua_load_config);
+	lua_register(this->L,"_CameraChangePositon",this->lua_change_camera_position);
 }
 
 LuaWrapper::~LuaWrapper()
@@ -24,7 +25,6 @@ LuaWrapper::~LuaWrapper()
 
 void LuaWrapper::init()
 {
-
 	luaL_dofile(this->L,"lua/main.lua");
 	lua_getglobal(this->L,"init");
 	lua_pcall(this->L,0,0,0);
@@ -121,7 +121,39 @@ int LuaWrapper::lua_load_config(lua_State* L)
 	return 0;
 }
 
+int LuaWrapper::lua_load_sprite(lua_State* L)
+{
+	LuaWrapper* current_wrapper = static_cast<LuaWrapper*>(lua_touserdata(L, 1));
+	lua_remove(L, 1);
+	return 0;
+}
+
+int LuaWrapper::lua_change_camera_position(lua_State* L)
+{
+	LuaWrapper* current_wrapper = static_cast<LuaWrapper*>(lua_touserdata(L, 1));
+	lua_remove(L, 1);
+
+	float camera_x = (float)lua_tonumber(current_wrapper->L,1);
+	lua_remove(current_wrapper->L,1);
+	float camera_y = (float)lua_tonumber(current_wrapper->L,1);
+	lua_remove(current_wrapper->L,1);
+	float size_cooficient = (float)lua_tonumber(current_wrapper->L,1);
+	lua_remove(current_wrapper->L,1);
+
+	float width = (float)current_wrapper->resolution_width * size_cooficient;
+	float height = (float)current_wrapper->resolution_height * size_cooficient;
+
+	current_wrapper->camera_reference->setCenter(camera_x,camera_y);
+	current_wrapper->camera_reference->setSize(width,height);
+	return 0;
+}
+
 void LuaWrapper::reference_map(map* current_map)
 {
 	this->reference_to_map = current_map;
+}
+
+void LuaWrapper::reference_camera(View* view)
+{
+	this->camera_reference = view;
 }

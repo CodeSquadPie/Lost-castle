@@ -2,13 +2,17 @@ local map_location = "../assets/maps/debug/"
 local config_location = "../config/config.lua"
 
 map = dofile(map_location.."map.lua")
+config = dofile(config_location)
+_LoadConfig(_host,config)
 
 world = require("lua/world")
 ent = world.entities:create()
 print("entity exists =")
 print(world.entities:exists(ent))
 world.systems.components:add("position",ent,5,5)
-world.systems.components:add("velocity",ent,6,9)
+world.systems.components:add("velocity",ent,20,2)
+world.systems.components:add("camera",ent,config.width,config.height,0.5)
+
 
 map.tilesets[1].image = map_location..map.tilesets[1].image
 --[[
@@ -43,8 +47,7 @@ _LoadMenu(
 
 --]]
 
-config = dofile(config_location)
-_LoadConfig(_host,config)
+
 
 init = function()
 	print("Lua called init function within script.")
@@ -58,15 +61,7 @@ init = function()
 		map.tilesets[1].columns,
 		map.layers[1].data
 	)
---[[
-	b = world.entities.create()
-	c = world.entities.create()
-	d = world.entities.create()
 
-	print(world.entities.exists(b))
-	print(world.entities.exists(c))
-	print(world.entities.exists(d))
---]]
 end
 
 update = function(dt)

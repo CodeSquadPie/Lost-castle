@@ -30,5 +30,19 @@ component.velocity = function(...)
   }
 end
 
+component.camera = function(...)
+  local arg = {...}
+  local width_loc = arg[1]
+  local height_loc = arg[2]
+  local scale_loc = arg[3]
+  if arg[1] == nil then width_loc = 800 end
+  if arg[2] == nil then height_loc = 600 end
+  if arg[3] == nil then scale_loc = 0.5 end 
+  return {
+    width = width_loc,
+    height = height_loc,
+    scale = scale_loc
+  }
+end
 
 return component
