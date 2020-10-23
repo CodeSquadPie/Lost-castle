@@ -4,18 +4,19 @@ extern "C" {
 }
 #include "game_header.h"
 
-class LuaWrapper
+class lua_wrapper
 {
 	private:
 		lua_State* L;
 		map *reference_to_map;
 		View *camera_reference;
+		controller *control_reference;
 	public:
 		unsigned int resolution_width;
 		unsigned int resolution_height;
 		unsigned int framerate_limit;
-		LuaWrapper();
-		~LuaWrapper();
+		lua_wrapper();
+		~lua_wrapper();
 		void init();
 		void update(float time);
 		void draw();
@@ -23,6 +24,7 @@ class LuaWrapper
 		static int lua_load_config(lua_State *L);
 		static int lua_load_sprite(lua_State *L);
 		static int lua_change_camera_position(lua_State *L);
+		void reference_control(controller *control);
 		void reference_map(map *current_map);
 		void reference_camera(View *view);
 };

@@ -1,2 +1,10 @@
-﻿  LuaWrapper.cpp
+﻿  controller.cpp
+  lost_castle.cpp
+C:\Programming\GitHub\Lost-castle\Lost castle\Lost castle\lost_castle.cpp(38,20): warning C4244: инициализация: преобразование "sf::Int64" в "float", возможна потеря данных
+  lua_wrapper.cpp
+  map.cpp
+C:\Programming\GitHub\Lost-castle\Lost castle\Lost castle\map.cpp(40,46): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Programming\GitHub\Lost-castle\Lost castle\Lost castle\map.cpp(40,29): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+  sprite_container.cpp
+  Создание кода...
   Lost castle.vcxproj -> C:\Programming\GitHub\Lost-castle\Lost castle\x64\Debug\Lost castle.exe

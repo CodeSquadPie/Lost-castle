@@ -154,18 +154,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="character.cpp" />
-    <ClCompile Include="Lost castle.cpp" />
-    <ClCompile Include="LuaWrapper.cpp" />
+    <ClCompile Include="controller.cpp" />
+    <ClCompile Include="lost_castle.cpp" />
+    <ClCompile Include="lua_wrapper.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="sprite_container.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
+    <ClInclude Include="controller.h" />
     <ClInclude Include="game_header.h" />
     <ClInclude Include="lua540\include\lauxlib.h" />
     <ClInclude Include="lua540\include\lua.h" />
     <ClInclude Include="lua540\include\lualib.h" />
-    <ClInclude Include="LuaWrapper.h" />
+    <ClInclude Include="lua_wrapper.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="sprite_container.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\config\config.lua" />

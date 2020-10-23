@@ -1,9 +1,10 @@
-﻿#include "LuaWrapper.h"
-//#include "character.h"
+﻿#include "lua_wrapper.h"
+#include "controller.h"
 #include "map.h"
 #include "game_header.h"
 
-LuaWrapper Lua;
+lua_wrapper Lua;
+controller contr;
 map current_map;
 Clock timer;
 Time time_elapsed;
@@ -14,6 +15,7 @@ int main()
 {
     Lua.reference_map(&current_map);
     Lua.reference_camera(&view);
+    Lua.reference_control(&contr);
     Lua.init();
     
     RenderWindow window(
@@ -36,7 +38,7 @@ int main()
         float time = timer.getElapsedTime().asMicroseconds();
         time = time / 1000;
         time_elapsed = timer.restart();
-        
+        contr.update();
         Lua.update(time_elapsed.asSeconds());
         Vector2u screen_size = window.getSize();
         Vector2f screen_size_half;
@@ -47,6 +49,6 @@ int main()
         window.setView(view);
         window.display();
     }
-    Lua.~LuaWrapper();
+    Lua.~lua_wrapper();
     return 0;
 }

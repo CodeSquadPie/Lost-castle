@@ -32,4 +32,52 @@ system.camera_movement = function()
   return cam
 end
 
+system.controller = function()
+  contr = {}
+  
+    contr.update = function(controlls)
+      index = components:first_instance("controller")
+      if index ~= nil then
+        if world.entities:exists(index) then
+          components.pool["controller"][index].up = controlls.up
+          components.pool["controller"][index].down = controlls.down
+          components.pool["controller"][index].left = controlls.left
+          components.pool["controller"][index].right = controlls.right
+          components.pool["controller"][index].action = controlls.action 
+        end
+      end
+    end
+    
+    contr.apply = function(dt)
+      index = components:correlation_2_first_instance("velocity","controller")
+      controller = components.pool["controller"][index]
+      if world.entities:exists(index) then
+        delta_x_velocity = 0
+        delta_y_velocity = 0
+        if controller ~= nil then
+          if     controller.up then
+            delta_y_velocity = delta_y_velocity - 1
+          elseif controller.down then
+            delta_y_velocity = delta_y_velocity + 1
+          end
+          if     controller.left then
+            delta_x_velocity = delta_x_velocity - 1
+          elseif controller.right then
+            delta_x_velocity = delta_x_velocity + 1
+          end
+          if math.abs(delta_x_velocity) == 1 and math.abs(delta_y_velocity) == 1 then
+            delta_x_velocity = delta_x_velocity * 0.85 * dt
+            delta_y_velocity = delta_y_velocity * 0.85 * dt
+          else
+            delta_x_velocity = delta_x_velocity * dt
+            delta_y_velocity = delta_y_velocity * dt
+          end
+          components.pool["velocity"][index].dx = components.pool["velocity"][index].dx + delta_x_velocity
+          components.pool["velocity"][index].dy = components.pool["velocity"][index].dy + delta_y_velocity
+        end 
+      end
+    end
+  return contr
+end
+
 return system

@@ -4,13 +4,13 @@ components = {}
 
 components.pool = {}
 
-function components:add(component_name,index,...)
+function components:add(index,component_name,args)
   if self.pool[component_name] == nil then
-    print("it's nil")
+    print("cathegory currently is nil")
     for k,v in pairs(component) do
       if k == component_name then
         self.pool[component_name] = {}
-        print("added new cathegory of components")
+        print("added new cathegory of components: "..component_name)
       end
     end
     if self.pool[component_name] == nil then
@@ -19,11 +19,18 @@ function components:add(component_name,index,...)
     end
   end
   if world.entities:exists(index) and self.pool[component_name][index] == nil then
-    print("adding component")
-    self.pool[component_name][index] = component[component_name](...)
+    print("adding component "..component_name)
+    
+    self.pool[component_name][index] = component[component_name](args)
     return true
   else
     return false
+  end
+end
+
+function components:first_instance(name)
+  for k,v in pairs(self.pool[name])do
+    if v ~= nil then return k end
   end
 end
 
@@ -67,7 +74,7 @@ function components:correlation_3_first_instance(name_1,name_2,name_3)
   end
 end
 
-function components:remove(component_name,index)
+function components:remove(index,component_name)
   self.pool[component_name][index] = nil
 end
 

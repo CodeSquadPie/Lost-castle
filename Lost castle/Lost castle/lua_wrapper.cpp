@@ -1,6 +1,6 @@
-#include "LuaWrapper.h"
+#include "lua_wrapper.h"
 
-LuaWrapper::LuaWrapper()
+lua_wrapper::lua_wrapper()
 {
 	//create lua state and open libs
 	this->L = luaL_newstate();
@@ -18,35 +18,51 @@ LuaWrapper::LuaWrapper()
 	lua_register(this->L,"_CameraChangePositon",this->lua_change_camera_position);
 }
 
-LuaWrapper::~LuaWrapper()
+lua_wrapper::~lua_wrapper()
 {
 	lua_close(this->L);
 }
 
-void LuaWrapper::init()
+void lua_wrapper::init()
 {
 	luaL_dofile(this->L,"lua/main.lua");
 	lua_getglobal(this->L,"init");
 	lua_pcall(this->L,0,0,0);
 }
 
-void LuaWrapper::update(float time)
+void lua_wrapper::update(float time)
 {
 	lua_getglobal(this->L,"update");
 	lua_Number delta_time = time;
 	lua_pushnumber(this->L,delta_time);
-	lua_pcall(this->L,1,0,0);
+	lua_newtable(this->L);
+	lua_pushstring(this->L, "up");
+	lua_pushboolean(this->L, this->control_reference->up);
+	lua_settable(this->L, -3);
+	lua_pushstring(this->L, "down");
+	lua_pushboolean(this->L, this->control_reference->down);
+	lua_settable(this->L, -3);
+	lua_pushstring(this->L, "left");
+	lua_pushboolean(this->L, this->control_reference->left);
+	lua_settable(this->L, -3);
+	lua_pushstring(this->L, "right");
+	lua_pushboolean(this->L, this->control_reference->right);
+	lua_settable(this->L, -3); 
+	lua_pushstring(this->L, "action");
+	lua_pushboolean(this->L, this->control_reference->action);
+	lua_settable(this->L, -3);
+	lua_pcall(this->L,2,0,0);
 }
 
-void LuaWrapper::draw()
+void lua_wrapper::draw()
 {
 	lua_getglobal(this->L,"draw");
 	lua_pcall(this->L,0,0,0);
 }
 
-int LuaWrapper::lua_load_map(lua_State* L)
+int lua_wrapper::lua_load_map(lua_State* L)
 {
-	LuaWrapper *current_wrapper = static_cast<LuaWrapper*>(lua_touserdata(L,1));
+	lua_wrapper *current_wrapper = static_cast<lua_wrapper*>(lua_touserdata(L,1));
 	lua_remove(L,1);
 
 	std::string image = lua_tostring(L, 1);
@@ -96,10 +112,10 @@ int LuaWrapper::lua_load_map(lua_State* L)
 	return 0;
 }
 
-int LuaWrapper::lua_load_config(lua_State* L)
+int lua_wrapper::lua_load_config(lua_State* L)
 {
 	//read and remove froom stack pointer to this object
-	LuaWrapper* current_wrapper = static_cast<LuaWrapper*>(lua_touserdata(L, 1));
+	lua_wrapper* current_wrapper = static_cast<lua_wrapper*>(lua_touserdata(L, 1));
 	lua_remove(L, 1);
 
 	//push table key to needed field, call it from table on stack, read and
@@ -121,16 +137,16 @@ int LuaWrapper::lua_load_config(lua_State* L)
 	return 0;
 }
 
-int LuaWrapper::lua_load_sprite(lua_State* L)
+int lua_wrapper::lua_load_sprite(lua_State* L)
 {
-	LuaWrapper* current_wrapper = static_cast<LuaWrapper*>(lua_touserdata(L, 1));
+	lua_wrapper* current_wrapper = static_cast<lua_wrapper*>(lua_touserdata(L, 1));
 	lua_remove(L, 1);
 	return 0;
 }
 
-int LuaWrapper::lua_change_camera_position(lua_State* L)
+int lua_wrapper::lua_change_camera_position(lua_State* L)
 {
-	LuaWrapper* current_wrapper = static_cast<LuaWrapper*>(lua_touserdata(L, 1));
+	lua_wrapper* current_wrapper = static_cast<lua_wrapper*>(lua_touserdata(L, 1));
 	lua_remove(L, 1);
 
 	float camera_x = (float)lua_tonumber(current_wrapper->L,1);
@@ -148,12 +164,17 @@ int LuaWrapper::lua_change_camera_position(lua_State* L)
 	return 0;
 }
 
-void LuaWrapper::reference_map(map* current_map)
+void lua_wrapper::reference_control(controller* control)
+{
+	this->control_reference = control;
+}
+
+void lua_wrapper::reference_map(map* current_map)
 {
 	this->reference_to_map = current_map;
 }
 
-void LuaWrapper::reference_camera(View* view)
+void lua_wrapper::reference_camera(View* view)
 {
 	this->camera_reference = view;
 }
